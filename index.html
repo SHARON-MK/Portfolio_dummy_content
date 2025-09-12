@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sharon MK | AI Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Inter:wght@300;400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Animated background particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(0, 255, 200, 0.8);
+            border-radius: 50%;
+            animation: particleFloat 8s infinite linear;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Neural network background */
+        .neural-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 2rem;
+            padding-bottom: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-section {
+            margin-bottom: 3rem;
+        }
+
+        .name-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #00ff88, #00ccff, #ff00cc, #ffaa00);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 4s ease-in-out infinite, typeWriter 3s ease-out;
+            position: relative;
+        }
+
+        .subtitle {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            font-weight: 300;
+            color: #b3e5ff;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 2s ease-out 1s forwards;
+        }
+
+        .ai-quote {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 200, 0.3);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 2s ease-out 2s forwards;
+        }
+
+        .ai-quote::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 200, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        .quote-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            color: #e0f7ff;
+        }
+
+        .quote-author {
+            font-size: 0.9rem;
+            color: #00ff88;
+            font-weight: 600;
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+            opacity: 0;
+            animation: fadeInUp 2s ease-out 2.5s forwards;
+        }
+
+        .tag {
+            padding: 0.7rem 1.5rem;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 204, 255, 0.2));
+            border: 1px solid rgba(0, 255, 136, 0.5);
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #00ff88;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 255, 136, 0.3);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(0, 204, 255, 0.3));
+        }
+
+        .domain-showcase {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #00ff88;
+            border-radius: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #00ff88;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 2s ease-out 3s forwards;
+        }
+
+        .domain-showcase::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.2), transparent);
+            animation: shimmer 2s infinite 1s;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 2rem;
+            left: 0;
+            right: 0;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            animation: fadeInUp 2s ease-out 3.5s forwards;
+            text-align: center;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        /* Floating orbs with improved animation */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 200, 0.3) 0%, rgba(0, 255, 200, 0.1) 50%, transparent 100%);
+            animation: floatComplex 20s infinite ease-in-out;
+            z-index: -1;
+        }
+
+        .orb:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 5%;
+            animation-duration: 25s;
+        }
+
+        .orb:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            bottom: 15%;
+            right: 10%;
+            animation-duration: 30s;
+            animation-delay: -10s;
+        }
+
+        .orb:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            left: 70%;
+            animation-duration: 35s;
+            animation-delay: -20s;
+        }
+
+        /* Keyframe animations */
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes typeWriter {
+            0% {
+                width: 0;
+                border-right: 3px solid #00ff88;
+            }
+
+            50% {
+                border-right: 3px solid #00ff88;
+            }
+
+            100% {
+                width: 100%;
+                border-right: none;
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        @keyframes floatComplex {
+
+            0%,
+            100% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+
+            25% {
+                transform: translateY(-50px) translateX(30px) rotate(90deg);
+            }
+
+            50% {
+                transform: translateY(-20px) translateX(-20px) rotate(180deg);
+            }
+
+            75% {
+                transform: translateY(30px) translateX(40px) rotate(270deg);
+            }
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+
+            .ai-quote {
+                margin: 1rem auto;
+                padding: 1rem;
+            }
+
+            .tags-container {
+                gap: 0.5rem;
+            }
+
+            .tag {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+
+            .footer {
+                bottom: 1rem;
+                font-size: 0.7rem;
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Floating particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Neural network background -->
+    <div class="neural-bg">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <pattern id="neural-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+                    <circle cx="10" cy="10" r="2" fill="rgba(0,255,200,0.1)" />
+                    <circle cx="50" cy="30" r="1.5" fill="rgba(0,255,200,0.08)" />
+                    <circle cx="80" cy="70" r="2.5" fill="rgba(0,255,200,0.06)" />
+                    <line x1="10" y1="10" x2="50" y2="30" stroke="rgba(0,255,200,0.03)" stroke-width="1" />
+                    <line x1="50" y1="30" x2="80" y2="70" stroke="rgba(0,255,200,0.03)" stroke-width="1" />
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#neural-pattern)" />
+        </svg>
+    </div>
+
+    <!-- Floating orbs -->
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+
+    <div class="main-container">
+        <div class="hero-section">
+            <h1 class="name-title">SHARON MK</h1>
+            <h2 class="subtitle">AI Backend Systems Engineer</h2>
+        </div>
+
+        <div class="ai-quote">
+            <p class="quote-text">
+                "The question isn't whether AI will change our world, but whether we'll be wise enough to guide that
+                change toward human flourishing."
+            </p>
+            <p class="quote-author">— Inspired by AI Pioneers</p>
+        </div>
+
+        <div class="tags-container">
+            <span class="tag">🤖 Artificial Intelligence</span>
+            <span class="tag">🚀 Machine Learning</span>
+            <span class="tag">💻 Web Development</span>
+            <span class="tag">🔮 Future Tech</span>
+            <span class="tag">🧬 Neural Networks</span>
+            <span class="tag">⚡ Innovation</span>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        © 2025 Sharon MK • Crafting AI-Powered Experiences • All Rights Reserved
+    </footer>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Add hover effects to tags
+        document.addEventListener('DOMContentLoaded', function () {
+            createParticles();
+
+            const tags = document.querySelectorAll('.tag');
+            tags.forEach(tag => {
+                tag.addEventListener('mouseenter', function () {
+                    this.style.transform = 'translateY(-5px) scale(1.05)';
+                });
+
+                tag.addEventListener('mouseleave', function () {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Add click effect to domain showcase
+            const domain = document.querySelector('.domain-showcase');
+            domain.addEventListener('click', function () {
+                this.style.animation = 'none';
+                setTimeout(() => {
+                    this.style.animation = 'fadeInUp 2s ease-out 3s forwards';
+                }, 10);
+            });
+        });
+
+        // Add some interactivity
+        document.addEventListener('mousemove', function (e) {
+            const orbs = document.querySelectorAll('.orb');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+
+            orbs.forEach((orb, index) => {
+                const speed = (index + 1) * 0.02;
+                orb.style.transform += ` translate(${x * speed * 20}px, ${y * speed * 20}px)`;
+            });
+        });
+    </script>
+</body>
+
+</html>
