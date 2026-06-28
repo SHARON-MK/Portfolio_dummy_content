@@ -91,6 +91,16 @@
             pointer-events: none;
         }
 
+        .bg-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse 70% 55% at 50% 42%, rgba(12, 7, 16, 0.78) 0%, rgba(12, 7, 16, 0.35) 55%, rgba(12, 7, 16, 0) 80%),
+                linear-gradient(180deg, rgba(12, 7, 16, 0.55) 0%, rgba(12, 7, 16, 0.15) 18%, rgba(12, 7, 16, 0.15) 82%, rgba(12, 7, 16, 0.55) 100%);
+        }
+
         .hero-content {
             position: relative;
             z-index: 2;
@@ -122,6 +132,7 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 1.2rem;
             letter-spacing: -1px;
+            filter: drop-shadow(0 2px 20px rgba(0, 0, 0, 0.6));
         }
 
         .hero-sub {
@@ -132,6 +143,7 @@
             margin: 0 auto;
             line-height: 1.7;
             letter-spacing: 0.3px;
+            text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7);
         }
 
         .scroll-indicator {
@@ -194,6 +206,7 @@
             margin-bottom: 1rem;
             line-height: 1.15;
             text-align: center;
+            text-shadow: 0 2px 18px rgba(0, 0, 0, 0.65);
         }
 
         .section-sub {
@@ -203,6 +216,7 @@
             line-height: 1.8;
             margin: 0 auto 3.5rem;
             text-align: center;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
         }
 
         /* LETTER */
@@ -301,6 +315,7 @@
             text-align: center;
             line-height: 1.4;
             color: var(--text);
+            text-shadow: 0 2px 18px rgba(0, 0, 0, 0.65);
         }
 
         .vow-line span {
@@ -445,6 +460,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 2rem;
+            filter: drop-shadow(0 2px 20px rgba(0, 0, 0, 0.6));
         }
 
         .closing-sign {
@@ -452,6 +468,7 @@
             font-style: italic;
             font-size: 1.3rem;
             color: var(--muted);
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
         }
 
         .closing-sign strong {
@@ -534,6 +551,7 @@
 
 <body>
     <canvas id="bg-canvas"></canvas>
+    <div class="bg-overlay"></div>
     <div class="scroll-progress" id="scrollProgress"></div>
     <div class="top-label">for Arthana, with love</div>
     <div class="confetti-layer" id="confettiLayer"></div>
@@ -556,7 +574,7 @@
     <section id="letter">
         <div class="letter-box reveal">
             <div class="letter-mark">“</div>
-            <p class="letter-text">I build things for a living — pages, products, little systems that are
+            <p class="letter-text">I build things for a living — websites, softwares, little systems that are
                 supposed to behave the same way every time. You're the one thing in my life that proves some
                 things are better when they can't be engineered. You just happen. And I am endlessly, quietly
                 glad that you happened to me.</p>
@@ -565,7 +583,7 @@
     </section>
 
     <!-- REASONS -->
-    <section id="reasons">
+    <!-- <section id="reasons">
         <p class="section-tag reveal">A Few, Out of Many</p>
         <h2 class="section-title reveal">Reasons I Love You</h2>
         <p class="section-sub reveal">I could write a thousand of these. Here are the ones that come to mind
@@ -619,7 +637,7 @@
                     is.</div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- VOWS -->
     <section id="vows" style="background: var(--bg2); max-width:100%;">
@@ -651,7 +669,7 @@
     </section>
 
     <!-- QA -->
-    <section id="qa">
+    <!-- <section id="qa">
         <p class="section-tag reveal">In Case You're Wondering</p>
         <h2 class="section-title reveal">A Few Questions, Answered</h2>
         <div class="qa-list" style="margin-top:1rem;">
@@ -675,7 +693,7 @@
                 <div class="qa-a">Every single line of it. Yes.</div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- CLOSING -->
     <section id="closing">
@@ -710,7 +728,7 @@
             const heartCol = new Float32Array(heartCount * 3);
             const colorA = new THREE.Color(0xe8a3b3);
             const colorB = new THREE.Color(0xf3c98b);
-            const scaleF = 0.085;
+            const scaleF = 0.065;
             for (let i = 0; i < heartCount; i++) {
                 const t = Math.random() * Math.PI * 2;
                 let x = 16 * Math.pow(Math.sin(t), 3);
@@ -730,7 +748,7 @@
             heartGeo.setAttribute('position', new THREE.BufferAttribute(heartPos, 3));
             heartGeo.setAttribute('color', new THREE.BufferAttribute(heartCol, 3));
             const heartMat = new THREE.PointsMaterial({
-                size: 0.045, vertexColors: true, transparent: true, opacity: 0.85, depthWrite: false
+                size: 0.04, vertexColors: true, transparent: true, opacity: 0.45, depthWrite: false
             });
             const heartPoints = new THREE.Points(heartGeo, heartMat);
             heartGroup.add(heartPoints);
@@ -742,14 +760,14 @@
             for (let i = 0; i < dustCount * 3; i++) dustPos[i] = (Math.random() - 0.5) * 14;
             dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
             const dustMat = new THREE.PointsMaterial({
-                color: 0xf3c98b, size: 0.03, transparent: true, opacity: 0.35, depthWrite: false
+                color: 0xf3c98b, size: 0.03, transparent: true, opacity: 0.2, depthWrite: false
             });
             const dust = new THREE.Points(dustGeo, dustMat);
             scene.add(dust);
 
             // Thin floating "promise rings"
             const rings = [];
-            const ringMat = new THREE.MeshBasicMaterial({ color: 0xf3c98b, wireframe: true, transparent: true, opacity: 0.3 });
+            const ringMat = new THREE.MeshBasicMaterial({ color: 0xf3c98b, wireframe: true, transparent: true, opacity: 0.16 });
             const ringPositions = [[-2.6, 1.6, -1], [2.8, -1.2, -1.5], [-2.2, -2, -0.5]];
             ringPositions.forEach(pos => {
                 const ring = new THREE.Mesh(new THREE.TorusGeometry(0.4, 0.025, 8, 40), ringMat);
